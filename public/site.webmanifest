@@ -1,6 +1,7 @@
 {
   "name": "Nuke it",
-  "description": "A research based todo list app that actually works",
+  "short_name": "Nuke it",
+  "description": "A research-based todo list app that actually works",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -15,5 +16,13 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "screenshots": [],
+  "categories": ["todo", "productivity"],
+  "lang": "en-US"
 }
