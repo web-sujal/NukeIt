@@ -1,7 +1,7 @@
 {
   "name": "Nuke it",
   "short_name": "Nuke it",
-  "description": "A research-based todo list app that actually works",
+  "description": "A research-based day planner that actually works",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

@@ -9,7 +9,7 @@ const lato = Lato({
 
 export const metadata: Metadata = {
   title: "Nuke it",
-  description: "A research based todo list app that actually works",
+  description: "A research based day planner app that actually works",
 };
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="">
       <head>
         <link
           rel="apple-touch-icon"
