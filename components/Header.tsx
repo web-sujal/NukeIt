@@ -10,6 +10,7 @@ const Header = () => {
         ❄️ Nuke<span className="text-primary dark:text-secondary">It</span>
       </Link>
 
+      {/* TODO: add modal of sidebar */}
       <button onClick={() => alert("clicked")} className="lg:hidden">
         <MdOutlineMenu className="text-primary dark:text-secondary" size={40} />
       </button>
