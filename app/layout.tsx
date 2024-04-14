@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
+import Sidebar from "@/components/Sidebar";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -18,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="">
       <head>
         <link
           rel="apple-touch-icon"
@@ -39,7 +40,9 @@ export default function RootLayout({
         />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={lato.className}>{children}</body>
+      <body className={lato.className}>
+        <Sidebar>{children}</Sidebar>
+      </body>
     </html>
   );
 }
