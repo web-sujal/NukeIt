@@ -19,3 +19,9 @@ export const SidebarFeatureItems = [
   { label: "System", icon: <MdComputer />, path: "/system" },
   { label: "Analytics", icon: <IoAnalytics />, path: "/analytics" },
 ];
+
+export const BottomBarItems = [
+  { label: "Today", icon: <MdOutlineToday />, path: "/" },
+  { label: "Week", icon: <BsCalendarWeek />, path: "/this-week" },
+  { label: "Starred", icon: <FaStar />, path: "/starred" },
+];
