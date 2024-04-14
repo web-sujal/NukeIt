@@ -10,11 +10,11 @@ interface UseThemeStore {
 const toggleDarkClass = (isDarkMode: boolean) => {
   const root = window.document.documentElement;
   if (isDarkMode) {
-    root.classList.add("dark");
-    window.localStorage.setItem("isDarkMode", "true");
-  } else {
     root.classList.remove("dark");
     window.localStorage.setItem("isDarkMode", "false");
+  } else {
+    root.classList.add("dark");
+    window.localStorage.setItem("isDarkMode", "true");
   }
 };
 

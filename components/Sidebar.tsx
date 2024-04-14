@@ -16,19 +16,19 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
-  const [isMounted, setIsMounted] = useState(false);
   const user = false;
   // const isDarkMode = true;
   const { isDarkMode, toggleDarkMode } = useTheme();
 
   useEffect(() => {
-    setIsMounted(true);
-    if (isMounted) {
-      if (window.localStorage.getItem("isDarkMode") === "true") {
-        toggleDarkMode(true);
-      }
+    if (window.localStorage.getItem("isDarkMode") === "true") {
+      toggleDarkMode(true);
+    } else {
+      toggleDarkMode(false);
     }
-  }, [isMounted, toggleDarkMode]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-light p-10 text-dark md:px-20 md:py-10 dark:bg-dark dark:text-white">
@@ -74,13 +74,13 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             <div className="flex w-full items-center justify-between gap-x-6">
               {/* Dark mode icon */}
               {isDarkMode ? (
-                <MdOutlineDarkMode
+                <MdDarkMode
                   onClick={() => toggleDarkMode(isDarkMode)}
                   size={40}
                   className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
                 />
               ) : (
-                <MdDarkMode
+                <MdOutlineDarkMode
                   onClick={() => toggleDarkMode(isDarkMode)}
                   size={40}
                   className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
