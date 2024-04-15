@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
@@ -10,6 +10,7 @@ import useTheme from "@/hooks/useTheme";
 
 import SidebarItem from "./SidebarItem";
 import Header from "./Header";
+import BottomBar from "./BottomBar";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -31,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   }, []);
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center bg-light p-10 text-dark md:px-20 md:py-10 dark:bg-dark dark:text-white">
+    <div className="flex h-screen w-screen flex-col items-center justify-center bg-light text-dark md:px-20 md:py-10 dark:bg-dark dark:text-white">
       <Header />
 
       <div className="flex h-full w-full gap-x-6">
@@ -108,7 +109,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           </div>
         </div>
 
-        <main className="flex-3 flex h-full w-full">{children}</main>
+        <div className="flex-3 flex h-full w-full">
+          <BottomBar>{children}</BottomBar>
+        </div>
       </div>
     </div>
   );
