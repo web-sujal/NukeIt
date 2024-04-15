@@ -63,10 +63,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           ))}
 
           {/* User email && Dark mode / auth */}
-          <div className="mt-auto flex w-full flex-col items-start justify-between gap-y-4 px-4 text-primary-heading dark:text-secondary-heading">
-            <p>
+          <div className="mt-auto flex w-full flex-col items-start justify-between gap-y-4 px-4">
+            <p className="font-bold text-primary-heading dark:text-secondary-heading">
               user:{" "}
-              <span className="dark:text-secondary-subheading">
+              <span className="text-primary-subheading font-normal dark:text-secondary-subheading">
                 web.sujal@gmail.com
               </span>
             </p>

@@ -24,9 +24,10 @@ const config: Config = {
         "secondary-darker": "#6133f5",
 
         // Text color
-        "primary-heading": "#7A89A3", // just for headings
-        "secondary-heading": "#A1A5F3", // just for headings
-        "secondary-subheading": "#81819A", // just for headings
+        "primary-heading": "#4b576c",
+        "primary-subheading": "#606f8a",
+        "secondary-heading": "#A1A5F3",
+        "secondary-subheading": "#81819A",
 
         // Background colors
         light: "#E3F0FA", // Background color with primary

@@ -16,7 +16,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ Icon, label, path }) => {
   return (
     <Link
       href={path}
-      className={`mt-2 flex w-full cursor-pointer items-center justify-start gap-x-2 truncate rounded-lg  py-2 pl-5 text-lg transition hover:bg-modal-highlight-primary/85 dark:hover:bg-modal-highlight-secondary/85 ${
+      className={`text-primary-subheading mt-2 flex w-full cursor-pointer items-center justify-start gap-x-2 truncate  rounded-lg py-2 pl-5 text-lg transition hover:bg-modal-highlight-primary/85 dark:text-secondary-subheading dark:hover:bg-modal-highlight-secondary/85 ${
         pathName === path &&
         "bg-modal-highlight-primary dark:bg-modal-highlight-secondary"
       } ${
@@ -25,7 +25,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ Icon, label, path }) => {
         "bg-modal-highlight-primary dark:bg-modal-highlight-secondary"
       }`}
     >
-      <span className="text-primary-heading">{Icon}</span> {label}
+      <span className="text-primary-heading dark:text-secondary-heading">
+        {Icon}
+      </span>{" "}
+      {label}
     </Link>
   );
 };
