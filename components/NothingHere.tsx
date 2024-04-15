@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const NothingHere = () => {
   return (
-    <div className="h-full w-full">
+    <div className="relative h-full w-full">
       <Image
         src="/no-tasks.svg"
         alt="no tasks illustration"
