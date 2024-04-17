@@ -45,6 +45,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className={lato.className}>
+        <ToasterProvider />
         <ModalProvider />
         <Sidebar>{children}</Sidebar>
       </body>
