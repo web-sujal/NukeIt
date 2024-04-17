@@ -4,6 +4,8 @@ import { Lato } from "next/font/google";
 import Sidebar from "@/components/Sidebar";
 
 import "./globals.css";
+import ToasterProvider from "@/providers/ToasterProvider";
+import ModalProvider from "@/providers/ModalProvider";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -43,6 +45,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className={lato.className}>
+        <ModalProvider />
         <Sidebar>{children}</Sidebar>
       </body>
     </html>
