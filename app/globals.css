@@ -8,3 +8,21 @@
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    @apply w-1;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-md bg-primary-subheading/30 dark:bg-secondary-subheading/60;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-heading/30 transition dark:bg-secondary-heading/60;
+  }
+}
