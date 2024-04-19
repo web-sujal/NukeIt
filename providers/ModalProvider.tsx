@@ -13,7 +13,7 @@ const ModalProvider = () => {
     return null;
   }
 
-  return <>ModalProvider</>;
+  return <></>;
 };
 
 export default ModalProvider;
