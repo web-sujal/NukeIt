@@ -14,10 +14,12 @@ interface BottomBarProps {
 const BottomBar: React.FC<BottomBarProps> = ({ children }) => {
   const pathName = usePathname();
   return (
-    <div className="flex h-full w-full flex-col md:drop-shadow-2xl">
-      {children}
+    <div className="flex h-full max-h-screen w-full flex-col md:drop-shadow-2xl">
+      <div className="flex h-full max-h-[calc(100vh-108px)] md:max-h-[calc(100vh-220px)] lg:max-h-[calc(100vh-108px)]">
+        {children}
+      </div>
 
-      <div className="border-primary-subheading flex w-full items-center justify-around border-t-2 border-opacity-50 bg-modal-primary p-4 text-primary-heading md:rounded-b-2xl lg:hidden dark:border-secondary-subheading dark:bg-modal-secondary dark:text-secondary-subheading">
+      <div className="flex w-full items-center justify-around border-t-2 border-primary-subheading border-opacity-50 bg-modal-primary p-4 text-primary-heading md:rounded-b-2xl lg:hidden dark:border-secondary-subheading dark:bg-modal-secondary dark:text-secondary-subheading">
         {BottomBarItems.map((item) => (
           <Link
             key={item.path}
@@ -46,3 +48,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ children }) => {
 };
 
 export default BottomBar;
+
+/*
+  <div className="flex h-full max-h-[calc(100vh-110px)]  min-h-[calc(100vh-110px)] w-full flex-col md:max-h-[calc(100vh-220px)] md:min-h-[calc(100vh-220px)] md:drop-shadow-2xl lg:max-h-[calc(100vh-140px)]">
+*/

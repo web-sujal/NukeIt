@@ -8,14 +8,24 @@ export default function Home() {
     <Box>
       <Title label="Tasks" />
       {/* <NothingHere /> */}
-      <div className="flex flex-col gap-y-2 overflow-auto">
+      <div className="md:scrollbar no-scrollbar flex h-full w-full flex-1 flex-col gap-y-2 overflow-y-auto pt-2">
         <Task
           title="Bhagavad Gita"
-          status="not started"
+          status="completed"
           startTime="8:30 AM"
           endTime="9:00 AM"
-          alarm="done"
+          alarm
           desc="read a verse"
+          priority="medium"
+        />
+        <Task
+          title="Bhagavad Gita"
+          status="completed"
+          startTime="8:30 AM"
+          endTime="9:00 AM"
+          alarm
+          desc="read a verse"
+          priority="medium"
         />
       </div>
     </Box>
