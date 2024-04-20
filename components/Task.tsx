@@ -1,73 +1,94 @@
 "use client";
 
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { IoAlarmOutline } from "react-icons/io5";
 import { FaFlag } from "react-icons/fa6";
 import { MdOutlineDragIndicator } from "react-icons/md";
 
-import Chip from "./Chip";
+import { Task as TaskProps } from "@/types";
 
-interface TaskProps {
-  title: string;
-  priority?: "high" | "medium" | "low";
-  startTime?: string;
-  endTime?: string;
-  status:
-    | "in progress"
-    | "tomorrow"
-    | "not started"
-    | "completed"
-    | "haven't done";
-  alarm?: boolean;
-  desc?: string;
-}
+import Chip from "./Chip";
+import Checkbox from "./Checkbox";
 
 const Task: React.FC<TaskProps> = ({
   title,
   startTime,
   endTime,
-  status,
+  status = "not started",
   alarm,
   desc,
   priority = "low",
 }) => {
-  return <div className="flex">Task bahinchod</div>;
+  const [isChecked, setIsChecked] = useState(false);
+
+  const onChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  return (
+    <div
+      className={twMerge(
+        "flex cursor-pointer items-center justify-between gap-x-2 rounded-md border border-neutral-800/20 p-2 pl-3 text-primary-subheading dark:border-modal-highlight-secondary/80 dark:text-secondary-subheading",
+        status === "completed" &&
+          "border-none bg-green-100 dark:bg-green-700/15",
+        status === "haven't done" &&
+          "border-none bg-red-100 dark:bg-red-800/15",
+      )}
+    >
+      <Checkbox isChecked={isChecked} onChange={onChange} />
+
+      <div className="flex w-full flex-col">
+        {/* title and status */}
+        <div className="flex items-center justify-between text-black md:file:text-lg dark:text-white">
+          <div className="flex items-center justify-between gap-x-2">
+            <FaFlag
+              className={twMerge(
+                "text-green-500",
+                priority === "medium" && "text-yellow-400",
+                priority === "high" && "text-red-500",
+              )}
+              size={15}
+            />
+            <span
+              className={twMerge(
+                "truncate font-semibold",
+                isChecked && "line-through transition",
+              )}
+            >
+              {title}
+            </span>
+          </div>
+
+          <div className="md:pr-5">
+            <Chip status={status} />
+          </div>
+        </div>
+
+        {/* desc and others */}
+        <div className="flex w-full items-center justify-between gap-x-1 text-sm md:gap-x-3">
+          <div className="max-w-xs flex-1 truncate">{desc}</div>
+          <div className="flex-1 text-xs md:text-sm">
+            {startTime}
+            {endTime && ` - ${endTime}`}
+          </div>
+          <div className="flex-1">
+            {alarm && (
+              <IoAlarmOutline
+                className="mx-auto text-center lg:mx-0 lg:text-left"
+                size={20}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+
+      <MdOutlineDragIndicator
+        size={40}
+        className="text-primary-heading dark:text-secondary-subheading"
+      />
+    </div>
+  );
 };
 
 export default Task;
-
-/*
-  <div
-  className={twMerge(
-    "flex min-h-16 w-full flex-col rounded-md p-2 py-2",
-    bgColor,
-  )}
-  >
-    <---top--->
-    <div className="flex w-full items-center justify-between gap-x-2">
-      <div className="flex items-center justify-between gap-x-2">
-        <FaFlag
-          className={twMerge(
-            "text-green-500",
-            priority === "medium" && "text-yellow-400",
-            priority === "high" && "text-red-500",
-          )}
-          size={15}
-        />
-        <span className="truncate text-lg">{title}</span>
-      </div>
-
-      <Chip status={status} />
-    </div>
-
-    <---bottom--->
-    <div className="flex w-full items-center justify-between gap-x-3 px-1 text-sm text-primary-subheading dark:text-secondary-subheading">
-      <div className="max-w-xs flex-1 truncate pl-5">{desc}</div>
-      <div className="flex-1">
-        {startTime}
-        {endTime && ` - ${endTime}`}
-      </div>
-      <div className="flex-1">{alarm && <IoAlarmOutline size={20} />}</div>
-    </div>
-  </div>
-*/

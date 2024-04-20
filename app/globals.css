@@ -9,6 +9,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* customize scrollbar */
+
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     @apply w-1;
