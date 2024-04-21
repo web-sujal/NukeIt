@@ -17,6 +17,7 @@
 /build
 
 # misc
+password.txt
 .DS_Store
 *.pem
 
