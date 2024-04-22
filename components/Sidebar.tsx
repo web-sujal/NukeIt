@@ -11,6 +11,7 @@ import useTheme from "@/hooks/useTheme";
 import SidebarItem from "./SidebarItem";
 import Header from "./Header";
 import BottomBar from "./BottomBar";
+import useAuthModal from "@/hooks/useAuthModal";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -18,8 +19,8 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const user = false;
-  // const isDarkMode = true;
   const { isDarkMode, toggleDarkMode } = useTheme();
+  const { onOpen } = useAuthModal();
 
   useEffect(() => {
     if (window.localStorage.getItem("isDarkMode") === "true") {
@@ -67,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           <div className="mt-auto flex w-full flex-col items-start justify-between gap-y-4 px-4">
             <p className="font-bold text-primary-heading dark:text-secondary-heading">
               user:{" "}
-              <span className="text-primary-subheading font-normal dark:text-secondary-subheading">
+              <span className="font-normal text-primary-subheading dark:text-secondary-subheading">
                 web.sujal@gmail.com
               </span>
             </p>
@@ -94,13 +95,13 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               {/* Sign in Log out icon */}
               {user ? (
                 <IoIosLogOut
-                  onClick={() => {}}
+                  onClick={() => onOpen()}
                   className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
                   size={40}
                 />
               ) : (
                 <CiLogin
-                  onClick={() => {}}
+                  onClick={() => onOpen()}
                   className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
                   size={40}
                 />
