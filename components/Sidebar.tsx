@@ -4,23 +4,37 @@ import { useEffect } from "react";
 import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
+import toast from "react-hot-toast";
 
-import { SidebarFilterItems, SidebarFeatureItems } from "@/constants";
+import { supabaseAdmin } from "@/libs/supabaseAdmin";
 import useTheme from "@/hooks/useTheme";
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+import { SidebarFilterItems, SidebarFeatureItems } from "@/constants";
 
 import SidebarItem from "./SidebarItem";
 import Header from "./Header";
 import BottomBar from "./BottomBar";
-import useAuthModal from "@/hooks/useAuthModal";
 
 interface SidebarProps {
   children: React.ReactNode;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
-  const user = false;
+  const { user, isUserLoading } = useUser();
   const { isDarkMode, toggleDarkMode } = useTheme();
   const { onOpen } = useAuthModal();
+
+  const signOut = async () => {
+    const { error } = await supabaseAdmin.auth.signOut();
+
+    if (error) {
+      toast.error("Failed to log out.");
+      console.error(error);
+    }
+
+    return;
+  };
 
   useEffect(() => {
     if (window.localStorage.getItem("isDarkMode") === "true") {
@@ -69,7 +83,13 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             <p className="font-bold text-primary-heading dark:text-secondary-heading">
               user:{" "}
               <span className="font-normal text-primary-subheading dark:text-secondary-subheading">
-                web.sujal@gmail.com
+                {isUserLoading ? (
+                  <p>Loading...</p>
+                ) : user ? (
+                  user?.email
+                ) : (
+                  <span>not logged in.</span>
+                )}
               </span>
             </p>
 
@@ -95,7 +115,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               {/* Sign in Log out icon */}
               {user ? (
                 <IoIosLogOut
-                  onClick={() => onOpen()}
+                  onClick={signOut}
                   className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
                   size={40}
                 />
