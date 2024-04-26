@@ -53,7 +53,9 @@ const Task: React.FC<TaskProps> = ({
             <span
               className={twMerge(
                 "truncate font-semibold",
-                isChecked && "line-through transition",
+                isChecked &&
+                  status === "completed" &&
+                  "line-through transition",
               )}
             >
               {title}
