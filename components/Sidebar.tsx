@@ -84,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               user:{" "}
               <span className="font-normal text-primary-subheading dark:text-secondary-subheading">
                 {isUserLoading ? (
-                  <p>Loading...</p>
+                  <span>Loading...</span>
                 ) : user ? (
                   user?.email
                 ) : (
