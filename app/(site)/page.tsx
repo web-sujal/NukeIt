@@ -18,6 +18,15 @@ export default function Home() {
           desc="read a verse"
           priority="high"
         />
+        <Task
+          title="Chip to Select"
+          status="haven't done"
+          startTime="8:30 AM"
+          endTime="9:00 AM"
+          alarm
+          desc="read a verse"
+          priority="high"
+        />
       </div>
     </Box>
   );
