@@ -1,9 +1,10 @@
 "use client";
 
 import * as Select from "@radix-ui/react-select";
-import { BsArrowDown } from "react-icons/bs";
-import { ImCheckmark } from "react-icons/im";
 import { twMerge } from "tailwind-merge";
+import { GoDotFill } from "react-icons/go"; // TODO: improve ui with dot on lg screens
+
+import { Status } from "@/types";
 
 interface ChipProps {
   status:
@@ -19,23 +20,47 @@ const getColor = (status: string): string => {
 
   switch (status) {
     case "completed":
-      bgColor = "bg-green-700";
+      bgColor = "bg-green-700 dark:bg-green-800";
       break;
     case "haven't done":
-      bgColor = "bg-red-700";
+      bgColor = "bg-red-700 dark:bg-red-800";
       break;
     case "tomorrow":
-      bgColor = "bg-orange-700";
+      bgColor = "bg-orange-700 dark:bg-orange-800";
       break;
     case "not started":
-      bgColor = "bg-gray-700";
+      bgColor = "bg-gray-700 dark:bg-gray-800";
       break;
     case "in progress":
     default:
-      bgColor = "bg-blue-700";
+      bgColor = "bg-blue-700 dark:bg-blue-800";
       break;
   }
   return bgColor;
+};
+
+const getDotColor = (status: string): string => {
+  let color = "";
+
+  switch (status) {
+    case "completed":
+      color = "text-green-400";
+      break;
+    case "haven't done":
+      color = "text-red-400";
+      break;
+    case "tomorrow":
+      color = "text-orange-400";
+      break;
+    case "not started":
+      color = "text-gray-400";
+      break;
+    case "in progress":
+    default:
+      color = "text-blue-400";
+      break;
+  }
+  return color;
 };
 
 const Chip: React.FC<ChipProps> = ({ status }) => {
@@ -50,57 +75,67 @@ const Chip: React.FC<ChipProps> = ({ status }) => {
       <Select.Trigger
         aria-label="task status"
         className={twMerge(
-          `flex items-center justify-between gap-x-2 rounded-2xl px-3 py-1 text-xs text-white`,
+          `flex items-center justify-between gap-x-1 rounded-2xl px-3 py-1 text-xs text-white`,
           getColor(status),
         )}
       >
+        {/* <Select.Icon>
+          <GoDotFill className={getDotColor(status)} size={15} />
+        </Select.Icon> */}
         <Select.Value>{status}</Select.Value>
       </Select.Trigger>
 
       <Select.Portal>
-        <Select.Content>
-          <Select.ScrollUpButton />
-          <Select.Viewport>
+        <Select.Content
+          position="popper"
+          className="overflow-hidden rounded-2xl bg-modal-highlight-primary py-2  dark:bg-modal-highlight-secondary dark:text-white"
+        >
+          <Select.Viewport className="p-2">
+            {/* To-do */}
             <Select.Group>
-              <Select.Label>To-do</Select.Label>
-              <Select.Item value="tomorrow">
-                <Select.ItemText>Tomorrow</Select.ItemText>
-              </Select.Item>
-
-              <Select.Item value="not started">
-                <Select.ItemText>Not started</Select.ItemText>
-              </Select.Item>
-
-              <Select.Item value="haven't done">
-                <Select.ItemText>Unfinished/not done</Select.ItemText>
-              </Select.Item>
+              <Select.Label className="text-center text-xs leading-[25px] opacity-65">
+                To-do
+              </Select.Label>
+              <SelectItem value="tomorrow" label="Tomorrow" />
+              <SelectItem value="not started" label="Not started" />
+              <SelectItem value="haven't done" label="Unfinished/not done" />
             </Select.Group>
 
-            <Select.Separator />
+            <Select.Separator className="m-[5px] h-[1px] bg-primary-heading opacity-30 dark:bg-secondary-heading" />
 
+            {/* In progress */}
             <Select.Group>
-              <Select.Label>In progress</Select.Label>
-              <Select.Item value="in progress">
-                <Select.ItemText>In progress</Select.ItemText>
-              </Select.Item>
+              <Select.Label className="text-center text-xs leading-[25px] opacity-65">
+                In progress
+              </Select.Label>
+              <SelectItem value="in progress" label="In progress" />
             </Select.Group>
 
-            <Select.Separator />
+            <Select.Separator className="m-[5px] h-[1px] bg-primary-heading opacity-30 dark:bg-secondary-heading" />
 
+            {/* Complete */}
             <Select.Group>
-              <Select.Label>Complete</Select.Label>
-              <Select.Item value="completed">
-                <Select.ItemText>Done</Select.ItemText>
-              </Select.Item>
+              <Select.Label className="text-center text-xs leading-[25px] opacity-65">
+                Complete
+              </Select.Label>
+              <SelectItem value="completed" label="Done" />
             </Select.Group>
-
-            <Select.Separator />
           </Select.Viewport>
-          <Select.ScrollDownButton />
           <Select.Arrow />
         </Select.Content>
       </Select.Portal>
     </Select.Root>
+  );
+};
+
+const SelectItem = ({ value, label }: { value: Status; label: string }) => {
+  return (
+    <Select.Item
+      value={value}
+      className="flex items-center rounded-md px-2 py-1 text-primary-subheading transition-all data-[highlighted]:bg-primary/35 data-[highlighted]:text-black data-[highlighted]:outline-none dark:text-secondary-subheading dark:data-[highlighted]:bg-secondary/35 dark:data-[highlighted]:text-white"
+    >
+      <Select.ItemText>{label}</Select.ItemText>
+    </Select.Item>
   );
 };
 
