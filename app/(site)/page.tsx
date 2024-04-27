@@ -45,15 +45,6 @@ export default function Home() {
           desc="read a verse"
           priority="high"
         />
-        <Task
-          title="Chip to Select"
-          status="tomorrow"
-          startTime="8:30 AM"
-          endTime="9:00 AM"
-          alarm
-          desc="read a verse"
-          priority="high"
-        />
       </div>
     </Box>
   );
@@ -61,3 +52,4 @@ export default function Home() {
 
 // TODO:
 //  <a href="https://storyset.com/data">Data illustrations by Storyset</a>
+//  long title screen overflow bug fix

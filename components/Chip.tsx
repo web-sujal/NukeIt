@@ -75,13 +75,16 @@ const Chip: React.FC<ChipProps> = ({ status }) => {
       <Select.Trigger
         aria-label="task status"
         className={twMerge(
-          `flex items-center justify-between gap-x-1 rounded-2xl px-3 py-1 text-xs text-white`,
+          `flex items-center justify-between gap-x-1 rounded-2xl px-3 py-1 text-xs text-white focus:border-none focus:outline-none`,
           getColor(status),
         )}
       >
-        {/* <Select.Icon>
-          <GoDotFill className={getDotColor(status)} size={15} />
-        </Select.Icon> */}
+        <Select.Icon>
+          <GoDotFill
+            className={twMerge("hidden md:inline-flex", getDotColor(status))}
+            size={15}
+          />
+        </Select.Icon>
         <Select.Value>{status}</Select.Value>
       </Select.Trigger>
 
@@ -134,6 +137,9 @@ const SelectItem = ({ value, label }: { value: Status; label: string }) => {
       value={value}
       className="flex items-center rounded-md px-2 py-1 text-primary-subheading transition-all data-[highlighted]:bg-primary/35 data-[highlighted]:text-black data-[highlighted]:outline-none dark:text-secondary-subheading dark:data-[highlighted]:bg-secondary/35 dark:data-[highlighted]:text-white"
     >
+      <Select.Icon>
+        <GoDotFill className={getDotColor(value)} size={15} />
+      </Select.Icon>
       <Select.ItemText>{label}</Select.ItemText>
     </Select.Item>
   );
