@@ -23,7 +23,7 @@ const getUserTasks = async (): Promise<Task[]> => {
     const { data, error } = await supabaseAdmin
       .from("tasks")
       .select("*")
-      .eq("user_id", userId || "")
+      .eq("user_id", userId)
       .order("order", { ascending: true });
 
     if (error) {

@@ -27,5 +27,5 @@ export interface Task {
   desc?: string;
   subtasks?: Subtask[]; // Array of subtasks associated with the task
   order: number; // Order of the task, for sorting and display purposes
-  userId: string; // User ID associated with the task (owner of the task)
+  user_id: string; // User ID associated with the task (owner of the task)
 }
