@@ -4,7 +4,7 @@ import * as Select from "@radix-ui/react-select";
 import { twMerge } from "tailwind-merge";
 import { GoDotFill } from "react-icons/go"; // TODO: improve ui with dot on lg screens
 
-import { Status } from "@/types";
+import { TaskStatus } from "@/types";
 
 interface ChipProps {
   status:
@@ -131,7 +131,7 @@ const Chip: React.FC<ChipProps> = ({ status }) => {
   );
 };
 
-const SelectItem = ({ value, label }: { value: Status; label: string }) => {
+const SelectItem = ({ value, label }: { value: TaskStatus; label: string }) => {
   return (
     <Select.Item
       value={value}
