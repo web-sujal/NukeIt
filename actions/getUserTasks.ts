@@ -34,7 +34,7 @@ const getUserTasks = async (): Promise<Task[]> => {
     return (data as any) || [];
   } catch (error) {
     console.error(
-      "Unexpected error in getUserTasks:",
+      "Unexpected error while fetching tasks:",
       (error as Error).message,
     );
     return [];
