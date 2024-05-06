@@ -184,10 +184,13 @@ export type Database = {
           desc: string | null
           end_time: string | null
           id: number
+          order: number
           priority: string
           start_time: string | null
           status: string
+          subtasks: Json | null
           title: string
+          type: string
           user_id: string
         }
         Insert: {
@@ -195,10 +198,13 @@ export type Database = {
           desc?: string | null
           end_time?: string | null
           id?: number
+          order: number
           priority: string
           start_time?: string | null
           status: string
+          subtasks?: Json | null
           title: string
+          type: string
           user_id: string
         }
         Update: {
@@ -206,10 +212,13 @@ export type Database = {
           desc?: string | null
           end_time?: string | null
           id?: number
+          order?: number
           priority?: string
           start_time?: string | null
           status?: string
+          subtasks?: Json | null
           title?: string
+          type?: string
           user_id?: string
         }
         Relationships: [
