@@ -8,6 +8,9 @@ import { CiMenuKebab } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa6";
 
 import { BottomBarItems } from "@/constants";
+import useCreateTaskModal from "@/hooks/useCreateTaskModal";
+import { useUser } from "@/hooks/useUser";
+import useAuthModal from "@/hooks/useAuthModal";
 
 interface BottomBarProps {
   children: React.ReactNode;
@@ -15,8 +18,17 @@ interface BottomBarProps {
 
 const BottomBar: React.FC<BottomBarProps> = ({ children }) => {
   const pathName = usePathname();
+  const authModal = useAuthModal();
+  const createTaskModal = useCreateTaskModal();
+  const { user } = useUser();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleClick = () => {
+    if (!user) {
+      return authModal.onOpen();
+    }
+
+    return createTaskModal.onOpen();
+  };
 
   return (
     <div className="relative flex h-full max-h-screen w-full flex-col md:drop-shadow-2xl">
@@ -54,7 +66,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ children }) => {
       <div className="absolute bottom-20 left-[50%] -translate-x-[50%] lg:bottom-10 lg:left-auto lg:right-10 lg:-translate-x-0">
         <button
           aria-label="create task button"
-          onClick={() => setIsModalOpen(!isModalOpen)}
+          onClick={handleClick}
           className="flex size-16 items-center justify-center rounded-full border-none bg-white text-primary shadow-xl outline-none transition hover:bg-primary/20 focus:outline-none dark:bg-modal-highlight-secondary dark:text-secondary dark:hover:bg-secondary/25"
         >
           <FaPlus size={25} />

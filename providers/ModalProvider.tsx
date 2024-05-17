@@ -1,7 +1,9 @@
 "use client";
 
-import AuthModal from "@/components/AuthModal";
 import { useEffect, useState } from "react";
+
+import AuthModal from "@/components/AuthModal";
+import CreateTaskModal from "@/components/CreateTaskModal";
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -17,6 +19,7 @@ const ModalProvider = () => {
   return (
     <>
       <AuthModal />
+      <CreateTaskModal />
     </>
   );
 };
