@@ -1,76 +1,30 @@
 "use client";
 
+import { forwardRef } from "react";
 import * as Select from "@radix-ui/react-select";
 import { twMerge } from "tailwind-merge";
-import { GoDotFill } from "react-icons/go"; // TODO: improve ui with dot on lg screens
+import { GoDotFill } from "react-icons/go";
 
 import { TaskStatus } from "@/types";
+import { getColor, getDotColor } from "@/libs/helpers";
 
-interface ChipProps {
-  status:
-    | "in progress"
-    | "tomorrow"
-    | "not started"
-    | "completed"
-    | "haven't done";
+interface ChipProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  status: TaskStatus;
+  onValueChange: (value: TaskStatus) => void;
+  disabled?: boolean;
 }
 
-const getColor = (status: string): string => {
-  let bgColor = "";
-
-  switch (status) {
-    case "completed":
-      bgColor = "bg-green-700 dark:bg-green-800";
-      break;
-    case "haven't done":
-      bgColor = "bg-red-700 dark:bg-red-800";
-      break;
-    case "tomorrow":
-      bgColor = "bg-orange-700 dark:bg-orange-800";
-      break;
-    case "not started":
-      bgColor = "bg-gray-700 dark:bg-gray-800";
-      break;
-    case "in progress":
-    default:
-      bgColor = "bg-blue-700 dark:bg-blue-800";
-      break;
-  }
-  return bgColor;
-};
-
-const getDotColor = (status: string): string => {
-  let color = "";
-
-  switch (status) {
-    case "completed":
-      color = "text-green-400";
-      break;
-    case "haven't done":
-      color = "text-red-400";
-      break;
-    case "tomorrow":
-      color = "text-orange-400";
-      break;
-    case "not started":
-      color = "text-gray-400";
-      break;
-    case "in progress":
-    default:
-      color = "text-blue-400";
-      break;
-  }
-  return color;
-};
-
-const Chip: React.FC<ChipProps> = ({ status }) => {
+const Chip: React.FC<ChipProps> = ({
+  status,
+  onValueChange,
+  disabled = false,
+}) => {
   return (
     <Select.Root
       defaultValue="not started"
       value={status}
-      // open={true}
-      // onOpenChange={onChange}
-      // onValueChange={onValueChange}
+      disabled={disabled}
+      onValueChange={onValueChange}
     >
       <Select.Trigger
         aria-label="task status"
@@ -131,18 +85,29 @@ const Chip: React.FC<ChipProps> = ({ status }) => {
   );
 };
 
-const SelectItem = ({ value, label }: { value: TaskStatus; label: string }) => {
-  return (
-    <Select.Item
-      value={value}
-      className="flex items-center rounded-md px-2 py-1 text-primary-subheading transition-all data-[highlighted]:bg-primary/35 data-[highlighted]:text-black data-[highlighted]:outline-none dark:text-secondary-subheading dark:data-[highlighted]:bg-secondary/35 dark:data-[highlighted]:text-white"
-    >
-      <Select.Icon>
-        <GoDotFill className={getDotColor(value)} size={15} />
-      </Select.Icon>
-      <Select.ItemText>{label}</Select.ItemText>
-    </Select.Item>
-  );
-};
+interface SelectItemProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  value: TaskStatus;
+  label: string;
+}
+
+const SelectItem = forwardRef<HTMLInputElement, SelectItemProps>(
+  ({ value, label, ...props }, ref) => {
+    return (
+      <Select.Item
+        value={value}
+        className="flex items-center rounded-md px-2 py-1 text-primary-subheading transition-all data-[highlighted]:bg-primary/35 data-[highlighted]:text-black data-[highlighted]:outline-none dark:text-secondary-subheading dark:data-[highlighted]:bg-secondary/35 dark:data-[highlighted]:text-white"
+        {...props}
+        ref={ref}
+      >
+        <Select.Icon>
+          <GoDotFill className={getDotColor(value)} size={15} />
+        </Select.Icon>
+        <Select.ItemText>{label}</Select.ItemText>
+      </Select.Item>
+    );
+  },
+);
+
+SelectItem.displayName = "SelectItem";
 
 export default Chip;
