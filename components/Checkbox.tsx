@@ -1,8 +1,8 @@
 "use client";
 
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, InputHTMLAttributes } from "react";
 
-interface CheckboxProps {
+interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   isChecked: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
