@@ -8,9 +8,10 @@ export default function Home() {
     <Box>
       <Title label="Tasks" />
       {/* <NothingHere /> */}
-      <div className="md:scrollbar no-scrollbar flex h-full w-full flex-1 flex-col gap-y-4 overflow-y-auto pt-2">
+      <div className="md:scrollbar no-scrollbar flex h-full w-full flex-1 flex-col gap-y-3 overflow-y-auto pt-2">
         <Task
           title="Bhagavad Gita"
+          type="daily"
           status="completed"
           startTime="8:30 AM"
           endTime="9:00 AM"
@@ -19,6 +20,7 @@ export default function Home() {
           priority="high"
         />
         <Task
+          type="daily"
           title="Chip to Select"
           status="haven't done"
           startTime="8:30 AM"
@@ -28,6 +30,7 @@ export default function Home() {
           priority="high"
         />
         <Task
+          type="daily"
           title="Chip to Select"
           status="in progress"
           startTime="8:30 AM"
@@ -37,6 +40,7 @@ export default function Home() {
           priority="high"
         />
         <Task
+          type="daily"
           title="Chip to Select"
           status="not started"
           startTime="8:30 AM"
