@@ -16,7 +16,7 @@ export interface Subtask {
 }
 
 export interface Task {
-  id: string;
+  id?: string;
   title: string;
   type: TaskType;
   priority?: Priority;
@@ -26,6 +26,6 @@ export interface Task {
   alarm?: boolean;
   desc?: string;
   subtasks?: Subtask[]; // Array of subtasks associated with the task
-  order: number; // Order of the task, for sorting and display purposes
-  user_id: string; // User ID associated with the task (owner of the task)
+  order?: number; // Order of the task, for sorting and display purposes
+  user_id?: string; // User ID associated with the task (owner of the task)
 }
