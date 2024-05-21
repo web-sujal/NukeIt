@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({
 
         <Dialog.Content
           className={twMerge(
-            "fixed left-[50%] top-[50%] h-full max-h-full w-full translate-x-[-50%] translate-y-[-50%] rounded-md border border-neutral-700 bg-neutral-800 p-[25px] text-white drop-shadow-md focus:outline-none md:h-auto md:max-h-[85vh] md:w-[95vw] md:max-w-[450px]",
+            "fixed left-[50%] top-[50%] h-full max-h-full w-full translate-x-[-50%] translate-y-[-50%] rounded-md border border-neutral-700 bg-neutral-800 p-[25px] text-white drop-shadow-md focus:outline-none md:h-auto md:max-h-[85vh] md:w-[95vw] md:max-w-[500px]",
             isDarkMode === false &&
               "border-modal-primary bg-modal-primary text-primary-heading",
           )}
