@@ -7,14 +7,15 @@ import { FaFlag } from "react-icons/fa6";
 import { MdOutlineDragIndicator } from "react-icons/md";
 
 import { Task as TaskProps } from "@/types";
+import { convertTo12HourFormat } from "@/libs/helpers";
 
 import Chip from "./Chip";
 import Checkbox from "./Checkbox";
 
 const Task: React.FC<TaskProps> = ({
   title,
-  startTime,
-  endTime,
+  start_time,
+  end_time,
   status = "not started",
   alarm,
   desc,
@@ -63,7 +64,7 @@ const Task: React.FC<TaskProps> = ({
           </div>
 
           <div className="md:pr-5">
-            <Chip status={status} />
+            <Chip status={status} onValueChange={() => {}} />
           </div>
         </div>
 
@@ -71,8 +72,8 @@ const Task: React.FC<TaskProps> = ({
         <div className="flex w-full items-center justify-between gap-x-1 text-sm md:gap-x-3">
           <div className="max-w-xs flex-1 truncate">{desc}</div>
           <div className="flex-1 text-xs md:text-sm">
-            {startTime}
-            {endTime && ` - ${endTime}`}
+            {start_time && convertTo12HourFormat(start_time)}
+            {end_time && ` - ${convertTo12HourFormat(end_time)}`}
           </div>
           <div className="flex-1">
             {alarm && (
