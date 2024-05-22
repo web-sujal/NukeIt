@@ -180,11 +180,12 @@ export type Database = {
       }
       tasks: {
         Row: {
+          alarm: boolean
           created_at: string
           desc: string | null
           end_time: string | null
           id: number
-          order: number
+          order: number | null
           priority: string
           start_time: string | null
           status: string
@@ -194,25 +195,27 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          alarm?: boolean
           created_at?: string
           desc?: string | null
           end_time?: string | null
           id?: number
-          order: number
-          priority: string
+          order?: number | null
+          priority?: string
           start_time?: string | null
-          status: string
+          status?: string
           subtasks?: Json | null
           title: string
-          type: string
+          type?: string
           user_id: string
         }
         Update: {
+          alarm?: boolean
           created_at?: string
           desc?: string | null
           end_time?: string | null
           id?: number
-          order?: number
+          order?: number | null
           priority?: string
           start_time?: string | null
           status?: string
