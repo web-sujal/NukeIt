@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 
 import Sidebar from "@/components/Sidebar";
-
-import "./globals.css";
 import ToasterProvider from "@/providers/ToasterProvider";
 import ModalProvider from "@/providers/ModalProvider";
+import SupabaseProvider from "@/providers/SupabaseProvider";
+import UserProvider from "@/providers/UserProvider";
+
+import "./globals.css";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -46,8 +48,12 @@ export default function RootLayout({
       </head>
       <body className={lato.className}>
         <ToasterProvider />
-        <ModalProvider />
-        <Sidebar>{children}</Sidebar>
+        <SupabaseProvider>
+          <UserProvider>
+            <ModalProvider />
+            <Sidebar>{children}</Sidebar>
+          </UserProvider>
+        </SupabaseProvider>
       </body>
     </html>
   );
