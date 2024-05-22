@@ -4,10 +4,10 @@ import { InputHTMLAttributes, forwardRef } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 import Input from "./Input";
-import { Inputs } from "./CreateTaskModal";
+import { Inputs } from "./TaskForm";
 
 interface TimeInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  id: "startTime" | "endTime";
+  id: "start_time" | "end_time";
   label: string;
   disabled: boolean;
   register: UseFormRegister<Inputs>;
