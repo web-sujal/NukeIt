@@ -6,13 +6,44 @@ import { twMerge } from "tailwind-merge";
 import { GoDotFill } from "react-icons/go";
 
 import { TaskStatus } from "@/types";
-import { getColor, getDotColor } from "@/libs/helpers";
 
 interface ChipProps extends React.InputHTMLAttributes<HTMLInputElement> {
   status: TaskStatus;
   onValueChange: (value: TaskStatus) => void;
   disabled?: boolean;
 }
+
+const getColor = (status: TaskStatus): string => {
+  switch (status) {
+    case "completed":
+      return "bg-green-700 dark:bg-green-800";
+    case "haven't done":
+      return "bg-red-700 dark:bg-red-800";
+    case "tomorrow":
+      return "bg-orange-700 dark:bg-orange-800";
+    case "not started":
+      return "bg-gray-700 dark:bg-gray-800";
+    case "in progress":
+    default:
+      return "bg-blue-700 dark:bg-blue-800";
+  }
+};
+
+const getDotColor = (status: TaskStatus): string => {
+  switch (status) {
+    case "completed":
+      return "text-green-400";
+    case "haven't done":
+      return "text-red-400";
+    case "tomorrow":
+      return "text-orange-400";
+    case "not started":
+      return "text-gray-400";
+    case "in progress":
+    default:
+      return "text-blue-400";
+  }
+};
 
 const Chip: React.FC<ChipProps> = ({
   status,
