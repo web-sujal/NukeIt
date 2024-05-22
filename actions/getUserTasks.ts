@@ -1,34 +1,33 @@
-import { supabaseAdmin } from "@/libs/supabaseAdmin";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+
 import { Task } from "@/types";
 
 const getUserTasks = async (): Promise<Task[]> => {
   try {
+    const supabase = createServerComponentClient({
+      cookies: cookies,
+    });
+
     // Retrieve session data
-    const { data: sessionData, error: sessionError } =
-      await supabaseAdmin.auth.getSession();
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
 
     if (sessionError) {
       console.error("Error retrieving session:", sessionError.message);
       return [];
     }
 
-    // Retrieve user ID from session data
-    const userId = sessionData.session?.user.id;
-    if (!userId) {
-      console.error("User ID not found in session data");
-      return [];
-    }
-
-    // Fetch user tasks
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from("tasks")
       .select("*")
-      .eq("user_id", userId)
+      .eq("user_id", session?.user.id)
       .order("order", { ascending: true });
 
     if (error) {
       console.error("Error fetching user tasks:", error.message);
-      return [];
     }
 
     return (data as any) || [];
