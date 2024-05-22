@@ -1,29 +1,41 @@
 "use client";
 
-import { useEffect } from "react";
-import { Auth } from "@supabase/auth-ui-react";
+import {
+  useSessionContext,
+  useSupabaseClient,
+} from "@supabase/auth-helpers-react";
+import { usePathname, useRouter } from "next/navigation";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useRouter } from "next/navigation";
-import { useSessionContext } from "@supabase/auth-helpers-react";
+import { Auth } from "@supabase/auth-ui-react";
+import { useEffect } from "react";
 
 import useAuthModal from "@/hooks/useAuthModal";
-import { supabaseAdmin } from "@/libs/supabaseAdmin";
+
 import useTheme from "@/hooks/useTheme";
 
 import Modal from "./Modal";
+import useTaskForm from "@/hooks/useTaskForm";
+import { getTaskTypeFromRoute } from "@/libs/helpers";
 
 const AuthModal = () => {
-  const { isDarkMode } = useTheme();
-  const { session } = useSessionContext();
+  const supabaseClient = useSupabaseClient();
   const router = useRouter();
+  const { session } = useSessionContext();
 
+  const { isDarkMode } = useTheme();
   const { isOpen, onClose } = useAuthModal();
+
+  const { setType } = useTaskForm();
+  const pathName = usePathname();
+  const taskType = getTaskTypeFromRoute(pathName);
 
   useEffect(() => {
     if (session) {
       router.refresh();
+      setType(taskType);
       onClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onClose, router, session]);
 
   const onChange = (open: boolean) => {
@@ -43,7 +55,7 @@ const AuthModal = () => {
         theme={isDarkMode ? "dark" : "light"}
         magicLink
         providers={["google", "github"]}
-        supabaseClient={supabaseAdmin}
+        supabaseClient={supabaseClient}
         appearance={{
           theme: ThemeSupa,
           variables: {
