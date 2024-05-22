@@ -1,55 +1,37 @@
+import getUserTasks from "@/actions/getUserTasks";
 import Box from "@/components/Box";
 import NothingHere from "@/components/NothingHere";
 import Task from "@/components/Task";
 import Title from "@/components/Title";
 
-export default function Home() {
+export default async function Home() {
+  const tasks = await getUserTasks();
+
+  // TODO: format end time and start time before rendering 03:26:00
+
   return (
     <Box>
       <Title label="Tasks" />
-      {/* <NothingHere /> */}
-      <div className="md:scrollbar no-scrollbar flex h-full w-full flex-1 flex-col gap-y-3 overflow-y-auto pt-2">
-        <Task
-          title="Bhagavad Gita"
-          type="daily"
-          status="completed"
-          startTime="8:30 AM"
-          endTime="9:00 AM"
-          alarm
-          desc="read a verse"
-          priority="high"
-        />
-        <Task
-          type="daily"
-          title="Chip to Select"
-          status="haven't done"
-          startTime="8:30 AM"
-          endTime="9:00 AM"
-          alarm
-          desc="read a verse"
-          priority="high"
-        />
-        <Task
-          type="daily"
-          title="Chip to Select"
-          status="in progress"
-          startTime="8:30 AM"
-          endTime="9:00 AM"
-          alarm
-          desc="read a verse"
-          priority="high"
-        />
-        <Task
-          type="daily"
-          title="Chip to Select"
-          status="not started"
-          startTime="8:30 AM"
-          endTime="9:00 AM"
-          alarm
-          desc="read a verse"
-          priority="high"
-        />
-      </div>
+
+      {tasks.length ? (
+        <div className="md:scrollbar no-scrollbar flex h-full w-full flex-1 flex-col gap-y-3 overflow-y-auto pt-2">
+          {tasks.map((task) => (
+            <Task
+              key={task.id}
+              title={task.title}
+              type={task.type}
+              status={task.status}
+              start_time={task.start_time}
+              end_time={task.end_time}
+              alarm={task.alarm}
+              desc={task.desc}
+              priority={task.priority}
+            />
+          ))}
+        </div>
+      ) : (
+        <NothingHere />
+      )}
     </Box>
   );
 }
