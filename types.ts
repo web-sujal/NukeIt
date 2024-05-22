@@ -1,3 +1,5 @@
+// import Stripe from "stripe";
+
 export type TaskType = "daily" | "weekly" | "monthly" | "misc";
 
 export type Priority = "high" | "medium" | "low";
@@ -20,12 +22,22 @@ export interface Task {
   title: string;
   type: TaskType;
   priority?: Priority;
-  startTime?: string;
-  endTime?: string;
+  start_time?: string;
+  end_time?: string;
   status?: TaskStatus;
   alarm?: boolean;
   desc?: string;
   subtasks?: Subtask[]; // Array of subtasks associated with the task
   order?: number; // Order of the task, for sorting and display purposes
   user_id?: string; // User ID associated with the task (owner of the task)
+}
+
+export interface UserDetails {
+  id: string;
+  first_name: string;
+  last_name: string;
+  full_name?: string;
+  avatar_url?: string;
+  // billing_address?: Stripe.Address;
+  // payment_method?: Stripe.PaymentMethod[Stripe.PaymentMethod.Type];
 }
