@@ -1,43 +1,50 @@
-import { supabaseAdmin } from "@/libs/supabaseAdmin";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import { Task } from "@/types";
 
-const createTask = async (newTask: Task): Promise<Task | null> => {
+type CreateTaskResult = {
+  success?: boolean;
+  error?: string;
+};
+
+const createTask = async (newTask: Task): Promise<CreateTaskResult> => {
   try {
+    const supabase = createClientComponentClient();
+
     // Retrieve session data
-    const { data: sessionData, error: sessionError } =
-      await supabaseAdmin.auth.getSession();
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
 
     if (sessionError) {
       console.error("Error retrieving session:", sessionError.message);
-      return null;
+      return { error: sessionError.message };
     }
 
     // Retrieve user ID from session data
-    const userId = sessionData.session?.user.id;
+    const userId = session?.user.id;
     if (!userId) {
-      console.error("User ID not found in session data");
-      return null;
+      const errorMessage = "User ID not found in session data";
+      console.error(errorMessage);
+      return { error: errorMessage };
     }
 
-    // Set the user_id field of the new task to the authenticated user's ID
-    const taskWithUserId: Task = { ...newTask, user_id: userId };
-
     // Insert the new task into the database
-    // TODO: fix typescript error after creating upload modal
-    const { data: createdTask, error: insertError } = await supabaseAdmin
-      .from("tasks")
-      .insert(taskWithUserId);
+    const { error: insertError } = await supabase.from("tasks").insert({
+      ...newTask,
+      user_id: userId,
+    });
 
     if (insertError) {
       console.error("Error creating task:", insertError.message);
-      return null;
+      return { error: insertError.message };
     }
 
-    // Return the newly created task
-    return createdTask ?? null;
+    return { success: true };
   } catch (error) {
     console.error("Unexpected error in createTask:", (error as Error).message);
-    return null;
+    return { error: (error as Error).message };
   }
 };
 
