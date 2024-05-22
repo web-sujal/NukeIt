@@ -5,8 +5,8 @@ import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import toast from "react-hot-toast";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
-import { supabaseAdmin } from "@/libs/supabaseAdmin";
 import useTheme from "@/hooks/useTheme";
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
@@ -21,19 +21,20 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
-  const { user, isUserLoading } = useUser();
+  const { user, isLoading } = useUser();
+  const supabaseClient = useSupabaseClient();
   const { isDarkMode, toggleDarkMode } = useTheme();
   const { onOpen } = useAuthModal();
 
-  const signOut = async () => {
-    const { error } = await supabaseAdmin.auth.signOut();
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut();
 
     if (error) {
-      toast.error("Failed to log out.");
+      toast.error(error.message);
       console.error(error);
+    } else {
+      toast.success("Logged out!");
     }
-
-    return;
   };
 
   useEffect(() => {
@@ -83,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             <p className="font-bold text-primary-heading dark:text-secondary-heading">
               user:{" "}
               <span className="font-normal text-primary-subheading dark:text-secondary-subheading">
-                {isUserLoading ? (
+                {isLoading ? (
                   <span>Loading...</span>
                 ) : user ? (
                   user?.email
@@ -115,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               {/* Sign in Log out icon */}
               {user ? (
                 <IoIosLogOut
-                  onClick={signOut}
+                  onClick={handleLogout}
                   className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
                   size={40}
                 />
