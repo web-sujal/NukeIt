@@ -22,17 +22,7 @@ const ThisMonth = () => {
       {monthlyTasks.length ? (
         <div className="md:scrollbar no-scrollbar flex h-full w-full flex-1 flex-col gap-y-3 overflow-y-auto pt-2">
           {monthlyTasks.map((task) => (
-            <Task
-              key={task.id}
-              title={task.title}
-              type={task.type}
-              status={task.status}
-              start_time={task.start_time}
-              end_time={task.end_time}
-              alarm={task.alarm}
-              desc={task.desc}
-              priority={task.priority}
-            />
+            <Task key={task.id} taskData={task} />
           ))}
         </div>
       ) : (
