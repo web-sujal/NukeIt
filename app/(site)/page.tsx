@@ -1,21 +1,27 @@
-import getUserTasks from "@/actions/getUserTasks";
+"use client";
+
+import useTaskStore from "@/hooks/useTaskStore";
 import Box from "@/components/Box";
 import NothingHere from "@/components/NothingHere";
 import Task from "@/components/Task";
 import Title from "@/components/Title";
+import Loader from "@/components/Loader";
 
-export default async function Home() {
-  const tasks = await getUserTasks();
+export default function Home() {
+  const { isLoading, getTasksByType } = useTaskStore();
+  const dailyTasks = getTasksByType("daily");
 
-  // TODO: format end time and start time before rendering 03:26:00
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Box>
       <Title label="Tasks" />
 
-      {tasks.length ? (
+      {dailyTasks.length ? (
         <div className="md:scrollbar no-scrollbar flex h-full w-full flex-1 flex-col gap-y-3 overflow-y-auto pt-2">
-          {tasks.map((task) => (
+          {dailyTasks.map((task) => (
             <Task
               key={task.id}
               title={task.title}
@@ -36,6 +42,4 @@ export default async function Home() {
   );
 }
 
-// TODO:
-//  <a href="https://storyset.com/data">Data illustrations by Storyset</a>
-//  long title screen overflow bug fix
+// TODO: long title screen overflow bug fix
