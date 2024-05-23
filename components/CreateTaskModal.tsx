@@ -7,8 +7,8 @@ import toast from "react-hot-toast";
 
 import useCreateTaskModal from "@/hooks/useCreateTaskModal";
 import useTaskForm from "@/hooks/useTaskForm";
+import useTaskStore from "@/hooks/useTaskStore";
 import { getCurrentTime, getTaskTypeFromRoute } from "@/libs/helpers";
-import createTask from "@/actions/createTask";
 
 import Modal from "./Modal";
 import TaskForm, { Inputs } from "./TaskForm";
@@ -27,6 +27,8 @@ const CreateTaskModal = () => {
     setPriority,
     setType,
   } = useTaskForm();
+
+  const { createTask, error } = useTaskStore();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -69,7 +71,8 @@ const CreateTaskModal = () => {
         type,
       };
 
-      const { error } = await createTask(newTask);
+      // const { error } = await createTask(newTask);
+      await createTask(newTask);
 
       if (error) {
         return toast.error(`Failed to create task: ${error}`);

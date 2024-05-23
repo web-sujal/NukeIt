@@ -37,7 +37,7 @@ const Task: React.FC<TaskProps> = ({
           "border-none bg-red-100 dark:bg-red-800/15",
       )}
     >
-      <Checkbox isChecked={isChecked} onChange={onChange} />
+      <Checkbox isChecked={status === "completed"} onChange={onChange} />
 
       <div className="flex w-full flex-col">
         {/* title and status */}
@@ -54,9 +54,7 @@ const Task: React.FC<TaskProps> = ({
             <span
               className={twMerge(
                 "truncate font-semibold",
-                isChecked &&
-                  status === "completed" &&
-                  "line-through transition",
+                status === "completed" && "line-through transition",
               )}
             >
               {title}
