@@ -19,7 +19,7 @@ const createTask = async (newTask: Task): Promise<CreateTaskResult> => {
 
     if (sessionError) {
       console.error("Error retrieving session:", sessionError.message);
-      return { error: sessionError.message };
+      return { success: false, error: sessionError.message };
     }
 
     // Retrieve user ID from session data
@@ -27,7 +27,7 @@ const createTask = async (newTask: Task): Promise<CreateTaskResult> => {
     if (!userId) {
       const errorMessage = "User ID not found in session data";
       console.error(errorMessage);
-      return { error: errorMessage };
+      return { success: false, error: errorMessage };
     }
 
     // Insert the new task into the database
@@ -38,7 +38,7 @@ const createTask = async (newTask: Task): Promise<CreateTaskResult> => {
 
     if (insertError) {
       console.error("Error creating task:", insertError.message);
-      return { error: insertError.message };
+      return { success: false, error: insertError.message };
     }
 
     return { success: true };

@@ -36,7 +36,7 @@ const getUserTasks = async (): Promise<GetUserTasksResult> => {
       return { data: null, error: error.message };
     }
 
-    return { data: (data as any) || [], error: null };
+    return { data, error: null };
   } catch (error) {
     console.error(
       "Unexpected error while fetching tasks:",
