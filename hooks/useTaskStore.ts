@@ -25,7 +25,7 @@ interface Actions {
 // define the initial state
 const initialState: State = {
   tasks: [],
-  isLoading: false,
+  isLoading: true,
   error: null,
 };
 
