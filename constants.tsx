@@ -12,7 +12,7 @@ export const SidebarFilterItems = [
     icon: <MdOutlineCalendarMonth />,
     path: "/this-month",
   },
-  { label: "Starred", icon: <FaStar />, path: "/starred" },
+  { label: "Misc", icon: <FaStar />, path: "/misc" },
 ];
 
 export const SidebarFeatureItems = [
@@ -23,5 +23,5 @@ export const SidebarFeatureItems = [
 export const BottomBarItems = [
   { label: "Today", icon: <MdOutlineToday />, path: "/" },
   { label: "Week", icon: <BsCalendarWeek />, path: "/this-week" },
-  { label: "Starred", icon: <FaStar />, path: "/starred" },
+  { label: "Misc", icon: <FaStar />, path: "/misc" },
 ];
