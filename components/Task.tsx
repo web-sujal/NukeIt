@@ -1,31 +1,55 @@
 "use client";
 
-import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { IoAlarmOutline } from "react-icons/io5";
 import { FaFlag } from "react-icons/fa6";
 import { MdOutlineDragIndicator } from "react-icons/md";
 
-import { Task as TaskType } from "@/types";
+import { TaskStatus, Task as TaskType } from "@/types";
 import { convertTo12HourFormat } from "@/libs/helpers";
 import useEditTaskModal from "@/hooks/useEditTaskModal";
+import useTaskStore from "@/hooks/useTaskStore";
 
 import Chip from "./Chip";
 import Checkbox from "./Checkbox";
+import toast from "react-hot-toast";
 
 interface TaskProps {
   taskData: TaskType;
 }
 
 const Task: React.FC<TaskProps> = ({ taskData }) => {
-  const [isChecked, setIsChecked] = useState(false);
   const { onOpen } = useEditTaskModal();
+  const { updateTask, error } = useTaskStore();
 
   const { title, start_time, end_time, status, alarm, desc, priority } =
     taskData;
 
-  const onChange = () => {
-    setIsChecked(!isChecked);
+  const onChange = async (status: TaskStatus) => {
+    try {
+      const updatedTask: TaskType = {
+        ...taskData,
+        status,
+      };
+
+      await updateTask(updatedTask);
+
+      if (error) {
+        toast.error(`Failed to update task: ${error}`);
+        console.error("failed to update task: ", error);
+        return;
+      }
+
+      toast.success("Task updated successfully.");
+    } catch (error) {
+      toast.error("An unexpected error occurred.");
+      console.error("Unexpected error in updating task status: ", error);
+    }
+  };
+
+  const onCheckboxChange = async (value: any) => {
+    toast.success("oye hoye te kudiyan sherdiya");
+    console.log("value: ", value);
   };
 
   const task: TaskType = {
@@ -43,7 +67,10 @@ const Task: React.FC<TaskProps> = ({ taskData }) => {
           "border-none bg-red-100 dark:bg-red-800/15",
       )}
     >
-      <Checkbox isChecked={status === "completed"} onChange={onChange} />
+      <Checkbox
+        isChecked={status === "completed"}
+        onChange={onCheckboxChange}
+      />
 
       <div className="flex w-full flex-col">
         {/* title and status */}
@@ -68,7 +95,7 @@ const Task: React.FC<TaskProps> = ({ taskData }) => {
           </div>
 
           <div className="md:pr-5">
-            <Chip status={status} onValueChange={() => {}} />
+            <Chip status={status} onValueChange={onChange} />
           </div>
         </div>
 
