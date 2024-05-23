@@ -1,5 +1,4 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import { Task } from "@/types";
 
@@ -10,9 +9,7 @@ interface GetUserTasksResult {
 
 const getUserTasks = async (): Promise<GetUserTasksResult> => {
   try {
-    const supabase = createServerComponentClient({
-      cookies: cookies,
-    });
+    const supabase = createClientComponentClient();
 
     // Retrieve session data
     const {
