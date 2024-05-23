@@ -1,4 +1,6 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect } from "react";
 import { Lato } from "next/font/google";
 
 import Sidebar from "@/components/Sidebar";
@@ -6,6 +8,7 @@ import ToasterProvider from "@/providers/ToasterProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
+import useTaskStore from "@/hooks/useTaskStore";
 
 import "./globals.css";
 
@@ -14,16 +17,19 @@ const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
 });
 
-export const metadata: Metadata = {
-  title: "Nuke it",
-  description: "A research based day planner app that actually works",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { fetchAndSetTasks } = useTaskStore();
+
+  useEffect(() => {
+    fetchAndSetTasks();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <html lang="en" className="dark">
       <head>
