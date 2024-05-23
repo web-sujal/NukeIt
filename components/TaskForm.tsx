@@ -1,39 +1,36 @@
 "use client";
 
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { BeatLoader } from "react-spinners";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as RadioGroup from "@radix-ui/react-radio-group";
+import { MdDeleteOutline } from "react-icons/md";
 
-import { Priority, Subtask, TaskStatus, TaskType } from "@/types";
 import useTaskForm from "@/hooks/useTaskForm";
+import useTaskStore from "@/hooks/useTaskStore";
+import useEditTaskModal from "@/hooks/useEditTaskModal";
+import { Inputs, Priority, TaskStatus, TaskType } from "@/types";
 
 import Chip from "./Chip";
 import Input from "./Input";
 import Checkbox from "./Checkbox";
 import TimeInput from "./TimeInput";
 
-export interface Inputs {
-  title: string;
-  desc?: string;
-  type: TaskType;
-  start_time?: string;
-  end_time?: string;
-  priority?: Priority;
-  status?: TaskStatus;
-  alarm?: boolean;
-  subtasks?: Subtask[];
-  order?: number;
-}
-
 type TaskFormProps = {
+  taskId?: string;
   defaultValues: Inputs;
   onSubmit: SubmitHandler<Inputs>;
   isLoading: boolean;
+  isCreating: boolean;
 };
 
 const TaskForm: React.FC<TaskFormProps> = ({
+  taskId,
   defaultValues,
   onSubmit,
   isLoading,
+  isCreating,
 }) => {
   const {
     alarmStatus,
@@ -46,6 +43,10 @@ const TaskForm: React.FC<TaskFormProps> = ({
     setType,
   } = useTaskForm();
 
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { removeTask } = useTaskStore();
+  const useEditModal = useEditTaskModal();
+
   const {
     register,
     handleSubmit,
@@ -53,6 +54,15 @@ const TaskForm: React.FC<TaskFormProps> = ({
   } = useForm<Inputs>({
     defaultValues,
   });
+
+  const handleDelete = async (taskId: string) => {
+    setIsDeleting(true);
+    await removeTask(taskId);
+    useEditModal.onClose();
+
+    toast.success("task deleted successfully.");
+    setIsDeleting(false);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
@@ -163,8 +173,27 @@ const TaskForm: React.FC<TaskFormProps> = ({
         disabled={isLoading}
         className="flex h-10 w-full items-center justify-center rounded-lg border-none bg-primary text-white shadow-xl outline-none transition hover:bg-primary/85 focus:outline-none dark:bg-secondary dark:hover:bg-secondary/85"
       >
-        {isLoading ? "Creating..." : "Create Task"}
+        {isCreating &&
+          (isLoading ? <BeatLoader color="white" size={15} /> : "Create Task")}
+        {!isCreating &&
+          (isLoading ? <BeatLoader color="white" size={15} /> : "Update Task")}
       </button>
+
+      {/* Delete Button */}
+      {!isCreating && taskId && (
+        <button
+          onClick={() => handleDelete(taskId)}
+          type="button"
+          disabled={isLoading}
+          className="flex h-10 w-full items-center justify-center rounded-lg border-none bg-rose-600 text-white shadow-xl outline-none transition hover:bg-rose-600/85 focus:outline-none"
+        >
+          {isDeleting ? (
+            <BeatLoader color="white" size={15} />
+          ) : (
+            <MdDeleteOutline size={25} className="text-white" />
+          )}
+        </button>
+      )}
     </form>
   );
 };
