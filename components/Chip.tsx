@@ -8,7 +8,7 @@ import { GoDotFill } from "react-icons/go";
 import { TaskStatus } from "@/types";
 
 interface ChipProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  status: TaskStatus;
+  status: TaskStatus | undefined;
   onValueChange: (value: TaskStatus) => void;
   disabled?: boolean;
 }
@@ -61,12 +61,15 @@ const Chip: React.FC<ChipProps> = ({
         aria-label="task status"
         className={twMerge(
           `flex items-center justify-between gap-x-1 rounded-2xl px-3 py-1 text-xs text-white focus:border-none focus:outline-none`,
-          getColor(status),
+          status && getColor(status),
         )}
       >
         <Select.Icon>
           <GoDotFill
-            className={twMerge("hidden md:inline-flex", getDotColor(status))}
+            className={twMerge(
+              "hidden md:inline-flex",
+              status && getDotColor(status),
+            )}
             size={15}
           />
         </Select.Icon>
