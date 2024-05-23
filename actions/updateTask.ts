@@ -1,30 +1,33 @@
-import { supabaseAdmin } from "@/libs/supabaseAdmin";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import { Task } from "@/types";
 
-const updateTask = async (
-  taskId: string,
-  updatedTask: Partial<Task>,
-): Promise<Task | null> => {
+type UpdateTaskResult = {
+  success?: boolean;
+  error?: string | null;
+};
+
+const updateTask = async (updatedTask: Task): Promise<UpdateTaskResult> => {
   try {
-    // TODO: fix ts type error after creating update modal
-    const { data: updatedTaskData, error } = await supabaseAdmin
+    const supabase = createClientComponentClient();
+
+    const { error } = await supabase
       .from("tasks")
       .update(updatedTask)
-      .eq("id", taskId)
-      .single();
+      .eq("id", updatedTask.id);
 
     if (error) {
       console.error("Error updating task:", error.message);
-      return null;
+      return { success: false, error: error.message };
     }
 
-    return updatedTaskData || null;
+    return { success: true };
   } catch (error) {
     console.error(
       "Unexpected error while updating task:",
       (error as Error).message,
     );
-    return null;
+    return { success: false, error: (error as Error).message };
   }
 };
 

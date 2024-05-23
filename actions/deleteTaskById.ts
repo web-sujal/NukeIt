@@ -1,24 +1,28 @@
-import { supabaseAdmin } from "@/libs/supabaseAdmin";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-const deleteTaskById = async (taskId: string): Promise<boolean> => {
+type DeleteTaskResult = {
+  success?: boolean;
+  error?: string;
+};
+
+const deleteTaskById = async (taskId: string): Promise<DeleteTaskResult> => {
   try {
-    const { error } = await supabaseAdmin
-      .from("tasks")
-      .delete()
-      .eq("id", taskId);
+    const supabase = createClientComponentClient();
+
+    const { error } = await supabase.from("tasks").delete().eq("id", taskId);
 
     if (error) {
       console.error("Error deleting task:", error.message);
-      return false;
+      return { success: false, error: error.message };
     }
 
-    return true;
+    return { success: true };
   } catch (error) {
     console.error(
       "Unexpected error while deleting task:",
       (error as Error).message,
     );
-    return false;
+    return { success: false, error: (error as Error).message };
   }
 };
 
