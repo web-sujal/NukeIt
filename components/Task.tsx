@@ -6,29 +6,35 @@ import { IoAlarmOutline } from "react-icons/io5";
 import { FaFlag } from "react-icons/fa6";
 import { MdOutlineDragIndicator } from "react-icons/md";
 
-import { Task as TaskProps } from "@/types";
+import { Task as TaskType } from "@/types";
 import { convertTo12HourFormat } from "@/libs/helpers";
+import useEditTaskModal from "@/hooks/useEditTaskModal";
 
 import Chip from "./Chip";
 import Checkbox from "./Checkbox";
 
-const Task: React.FC<TaskProps> = ({
-  title,
-  start_time,
-  end_time,
-  status = "not started",
-  alarm,
-  desc,
-  priority = "low",
-}) => {
+interface TaskProps {
+  taskData: TaskType;
+}
+
+const Task: React.FC<TaskProps> = ({ taskData }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const { onOpen } = useEditTaskModal();
+
+  const { title, start_time, end_time, status, alarm, desc, priority } =
+    taskData;
 
   const onChange = () => {
     setIsChecked(!isChecked);
   };
 
+  const task: TaskType = {
+    ...taskData,
+  };
+
   return (
     <div
+      onClick={() => onOpen(task)}
       className={twMerge(
         "flex cursor-pointer items-center justify-between gap-x-2 rounded-md border border-neutral-800/20 p-2 pl-3 text-primary-subheading dark:border-modal-highlight-secondary/80 dark:text-secondary-subheading",
         status === "completed" &&
