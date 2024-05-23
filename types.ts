@@ -32,6 +32,19 @@ export interface Task {
   user_id?: string; // User ID associated with the task (owner of the task)
 }
 
+export interface Inputs {
+  title: string;
+  desc?: string;
+  type: TaskType;
+  start_time?: string;
+  end_time?: string;
+  priority?: Priority;
+  status?: TaskStatus;
+  alarm?: boolean;
+  subtasks?: Subtask[];
+  order?: number;
+}
+
 export interface UserDetails {
   id: string;
   first_name: string;
