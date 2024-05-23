@@ -3,8 +3,9 @@
 import { InputHTMLAttributes, forwardRef } from "react";
 import { UseFormRegister } from "react-hook-form";
 
+import { Inputs } from "@/types";
+
 import Input from "./Input";
-import { Inputs } from "./TaskForm";
 
 interface TimeInputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: "start_time" | "end_time";
