@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
@@ -9,9 +8,10 @@ import useCreateTaskModal from "@/hooks/useCreateTaskModal";
 import useTaskForm from "@/hooks/useTaskForm";
 import useTaskStore from "@/hooks/useTaskStore";
 import { getCurrentTime, getTaskTypeFromRoute } from "@/libs/helpers";
+import { Inputs } from "@/types";
 
 import Modal from "./Modal";
-import TaskForm, { Inputs } from "./TaskForm";
+import TaskForm from "./TaskForm";
 
 const CreateTaskModal = () => {
   const pathName = usePathname();
@@ -28,9 +28,7 @@ const CreateTaskModal = () => {
     setType,
   } = useTaskForm();
 
-  const { createTask, error } = useTaskStore();
-
-  const [isLoading, setIsLoading] = useState(false);
+  const { createTask, error, isLoading } = useTaskStore();
 
   const defaultValues: Inputs = {
     title: "",
@@ -61,8 +59,6 @@ const CreateTaskModal = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      setIsLoading(true);
-
       const newTask = {
         ...data,
         status,
@@ -84,15 +80,12 @@ const CreateTaskModal = () => {
       onClose();
 
       setAlarmStatus(false);
-      setIsLoading(false);
       setStatus("not started");
       setPriority("low");
       setType(getTaskTypeFromRoute(pathName));
     } catch (error) {
       toast.error("An unexpected error occurred.");
       console.error("Unexpected error in onSubmit:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -107,6 +100,7 @@ const CreateTaskModal = () => {
         defaultValues={defaultValues}
         onSubmit={onSubmit}
         isLoading={isLoading}
+        isCreating
       />
     </Modal>
   );
