@@ -174,9 +174,9 @@ const TaskForm: React.FC<TaskFormProps> = ({
         className="flex h-10 w-full items-center justify-center rounded-lg border-none bg-primary text-white shadow-xl outline-none transition hover:bg-primary/85 focus:outline-none dark:bg-secondary dark:hover:bg-secondary/85"
       >
         {isCreating &&
-          (isLoading ? <BeatLoader color="white" size={15} /> : "Create Task")}
+          (isLoading ? <BeatLoader color="white" size={10} /> : "Create Task")}
         {!isCreating &&
-          (isLoading ? <BeatLoader color="white" size={15} /> : "Update Task")}
+          (isLoading ? <BeatLoader color="white" size={10} /> : "Update Task")}
       </button>
 
       {/* Delete Button */}
@@ -188,7 +188,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
           className="flex h-10 w-full items-center justify-center rounded-lg border-none bg-rose-600 text-white shadow-xl outline-none transition hover:bg-rose-600/85 focus:outline-none"
         >
           {isDeleting ? (
-            <BeatLoader color="white" size={15} />
+            <BeatLoader color="white" size={10} />
           ) : (
             <MdDeleteOutline size={25} className="text-white" />
           )}
