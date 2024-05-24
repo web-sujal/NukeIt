@@ -10,6 +10,7 @@ import { BottomBarItems } from "@/constants";
 import useCreateTaskModal from "@/hooks/useCreateTaskModal";
 import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
+import useMoreOptionsModal from "@/hooks/useMoreOptionsModal";
 
 interface BottomBarProps {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ children }) => {
   const pathName = usePathname();
   const authModal = useAuthModal();
   const createTaskModal = useCreateTaskModal();
+  const moreOptionsModal = useMoreOptionsModal();
   const { user } = useUser();
 
   const handleClick = () => {
@@ -53,7 +55,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ children }) => {
         ))}
 
         <button
-          onClick={() => {}}
+          onClick={() => moreOptionsModal.onOpen()}
           className="flex flex-col items-center justify-between gap-y-2 rounded-2xl p-4 text-center text-sm transition hover:bg-modal-highlight-primary/80 dark:hover:bg-modal-highlight-secondary/80"
         >
           <CiMenuKebab size={12} />
