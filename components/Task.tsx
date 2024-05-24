@@ -47,9 +47,31 @@ const Task: React.FC<TaskProps> = ({ taskData }) => {
     }
   };
 
-  const onCheckboxChange = async (value: any) => {
-    toast.success("oye hoye te kudiyan sherdiya");
-    console.log("value: ", value);
+  const handleCheckboxChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const isChecked = event.target.checked;
+    const status = isChecked ? "completed" : "not started";
+
+    try {
+      const updatedTask: TaskType = {
+        ...taskData,
+        status,
+      };
+
+      await updateTask(updatedTask);
+
+      if (error) {
+        toast.error(`Failed to update task: ${error}`);
+        console.error("failed to update task: ", error);
+        return;
+      }
+
+      toast.success("Task updated successfully.");
+    } catch (error) {
+      toast.error("An unexpected error occurred.");
+      console.error("Unexpected error in update onSubmit:", error);
+    }
   };
 
   const task: TaskType = {
@@ -58,7 +80,6 @@ const Task: React.FC<TaskProps> = ({ taskData }) => {
 
   return (
     <div
-      onClick={() => onOpen(task)}
       className={twMerge(
         "flex cursor-pointer items-center justify-between gap-x-2 rounded-md border border-neutral-800/20 p-2 pl-3 text-primary-subheading dark:border-modal-highlight-secondary/80 dark:text-secondary-subheading",
         status === "completed" &&
@@ -69,10 +90,10 @@ const Task: React.FC<TaskProps> = ({ taskData }) => {
     >
       <Checkbox
         isChecked={status === "completed"}
-        onChange={onCheckboxChange}
+        onChange={handleCheckboxChange}
       />
 
-      <div className="flex w-full flex-col">
+      <div onClick={() => onOpen(task)} className="flex w-full flex-col">
         {/* title and status */}
         <div className="flex items-center justify-between text-black md:file:text-lg dark:text-white">
           <div className="flex items-center justify-between gap-x-2">
