@@ -7,6 +7,7 @@ const NothingHere = () => {
         src="/no-tasks.svg"
         alt="no tasks illustration"
         fill
+        priority={true}
         className="object-contain p-10"
       />
     </div>
