@@ -1,41 +1,35 @@
 "use client";
 
 import { useEffect } from "react";
-import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
-import { CiLogin } from "react-icons/ci";
-import { IoIosLogOut } from "react-icons/io";
-import toast from "react-hot-toast";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 import useTheme from "@/hooks/useTheme";
-import useAuthModal from "@/hooks/useAuthModal";
-import { useUser } from "@/hooks/useUser";
 import { SidebarFilterItems, SidebarFeatureItems } from "@/constants";
+import { useUser } from "@/hooks/useUser";
 
 import SidebarItem from "./SidebarItem";
 import Header from "./Header";
 import BottomBar from "./BottomBar";
+import UserMenu from "./UserMenu";
+import useTaskStore from "@/hooks/useTaskStore";
 
 interface SidebarProps {
   children: React.ReactNode;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
-  const { user, isLoading } = useUser();
-  const supabaseClient = useSupabaseClient();
-  const { isDarkMode, toggleDarkMode } = useTheme();
-  const { onOpen } = useAuthModal();
+  const { toggleDarkMode } = useTheme();
+  const { user } = useUser();
+  const { fetchAndSetTasks, resetStore } = useTaskStore();
 
-  const handleLogout = async () => {
-    const { error } = await supabaseClient.auth.signOut();
+  useEffect(() => {
+    const initializeTaskStore = async () => {
+      if (user) {
+        await fetchAndSetTasks();
+      }
+    };
 
-    if (error) {
-      toast.error(error.message);
-      console.error(error);
-    } else {
-      toast.success("Logged out!");
-    }
-  };
+    initializeTaskStore();
+  }, [user]);
 
   useEffect(() => {
     if (window.localStorage.getItem("isDarkMode") === "true") {
@@ -43,8 +37,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
     } else {
       toggleDarkMode(false);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -80,55 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           ))}
 
           {/* User email && Dark mode / auth */}
-          <div className="mt-auto flex w-full flex-col items-start justify-between gap-y-4 px-4">
-            <p className="font-bold text-primary-heading dark:text-secondary-heading">
-              user:{" "}
-              <span className="font-normal text-primary-subheading dark:text-secondary-subheading">
-                {isLoading ? (
-                  <span>Loading...</span>
-                ) : user ? (
-                  user?.email
-                ) : (
-                  <span>not logged in.</span>
-                )}
-              </span>
-            </p>
-
-            <div className="flex w-full items-center justify-between gap-x-6">
-              {/* Dark mode icon */}
-              {isDarkMode ? (
-                <MdDarkMode
-                  onClick={() => toggleDarkMode(isDarkMode)}
-                  size={40}
-                  className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
-                />
-              ) : (
-                <MdOutlineDarkMode
-                  onClick={() => toggleDarkMode(isDarkMode)}
-                  size={40}
-                  className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
-                />
-              )}
-
-              {/* Separator */}
-              <div className="h-full w-1 border-l-2 border-secondary-heading opacity-70" />
-
-              {/* Sign in Log out icon */}
-              {user ? (
-                <IoIosLogOut
-                  onClick={handleLogout}
-                  className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
-                  size={40}
-                />
-              ) : (
-                <CiLogin
-                  onClick={() => onOpen()}
-                  className="cursor-pointer text-primary-heading transition hover:scale-105 dark:text-secondary-heading"
-                  size={40}
-                />
-              )}
-            </div>
-          </div>
+          <UserMenu />
         </div>
 
         <div className="flex-3 flex h-full w-full">
