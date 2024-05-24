@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import AuthModal from "@/components/AuthModal";
 import CreateTaskModal from "@/components/CreateTaskModal";
 import EditTaskModal from "@/components/EditTaskModal";
+import MoreOptionsModal from "@/components/MoreOptionsModal";
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -22,6 +23,7 @@ const ModalProvider = () => {
       <AuthModal />
       <CreateTaskModal />
       <EditTaskModal />
+      <MoreOptionsModal />
     </>
   );
 };
