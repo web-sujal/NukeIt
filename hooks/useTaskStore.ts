@@ -20,6 +20,7 @@ interface Actions {
   updateTask: (updatedTask: Task) => Promise<void>;
   removeTask: (taskId: string) => Promise<void>;
   getTasksByType: (type: TaskType) => Task[];
+  resetStore: () => void;
 }
 
 // define the initial state
@@ -115,6 +116,7 @@ const useTaskStore = create<State & Actions>()((set, get) => ({
   getTasksByType: (type: TaskType) => {
     return get().tasks.filter((task) => task.type === type);
   },
+  resetStore: () => set({ tasks: [] }),
 }));
 
 export default useTaskStore;
