@@ -9,6 +9,7 @@ import ModalProvider from "@/providers/ModalProvider";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
 import useTaskStore from "@/hooks/useTaskStore";
+import useTheme from "@/hooks/useTheme";
 
 import "./globals.css";
 
@@ -22,6 +23,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isDarkMode } = useTheme();
   const { fetchAndSetTasks } = useTaskStore();
 
   useEffect(() => {
@@ -51,6 +53,9 @@ export default function RootLayout({
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content={isDarkMode ? "#121215" : "#ffffff"} />
         <title>Nuke It</title>
       </head>
       <body className={lato.className}>

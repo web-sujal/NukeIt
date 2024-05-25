@@ -19,7 +19,7 @@ const toggleDarkClass = (isDarkMode: boolean) => {
 // window.localStorage.getItem("isDarkMode") === "true"
 
 const useTheme = create<UseThemeStore>((set) => ({
-  isDarkMode: true,
+  isDarkMode: false,
   toggleDarkMode: (state: boolean) => {
     toggleDarkClass(state);
     set({ isDarkMode: !state });
