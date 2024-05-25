@@ -18,10 +18,10 @@ Guest login credentials :-
 ## Screenshots
 
 <p align="center">
-   <img src="./public/images/screenshots/home.png" width="40%">
-   <img src="./public/images/screenshots/create_task.png" width="40%">
-   <img src="./public/images/screenshots/auth.png" width="40%">
-   <img src="./public/images/screenshots/home_dark.png" width="40%">
+   <img src="./public/images/screenshots/home.png" width="100%">
+   <img src="./public/images/screenshots/create_task.png" width="100%">
+   <img src="./public/images/screenshots/auth.png" width="100%">
+   <img src="./public/images/screenshots/home_dark.png" width="100%">
    <img src="./public/images/screenshots/m_home_tasks.png" width="30%">
    <img src="./public/images/screenshots/m_create_task.png" width="30%">
    <img src="./public/images/screenshots/m_more.png" width="30%">
